@@ -1,4 +1,4 @@
-package com.timberta.geekmusic
+package com.timberta.geekmusic.feature_main
 
 import org.junit.Assert.*
 import org.junit.Test
