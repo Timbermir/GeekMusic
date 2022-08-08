@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/mainFlowFragment"
-        android:name="com.timberta.geekmusic.feature_main.MainFlowFragment"
+        android:name="com.timberta.geekmusic.featureMain.MainFlowFragment"
         android:label="MainFlowFragment"
         tools:layout="@layout/fragment_main_flow" />
 
