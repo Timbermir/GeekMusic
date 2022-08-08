@@ -8,6 +8,7 @@ pluginManagement {
     }
 }
 
+enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
 
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
@@ -17,8 +18,18 @@ dependencyResolutionManagement {
         maven("tim-berta")
         maven { url = uri("https://jitpack.io") }
     }
+
+    versionCatalogs {
+        create("config") {
+            from(files("gradle/config.versions.toml"))
+        }
+        create("options") {
+            from(files("gradle/options.versions.toml"))
+        }
+
+    }
 }
 
 rootProject.name = "GeekMusic"
-include(":app", ":common", ":core", ":feature-main")
-enableFeaturePreview("VERSION_CATALOGS")
+include(":app", ":common", ":core", ":core-ui")
+include(":features:feature-main", ":features:feature-main:data", ":features:feature-main:domain")
