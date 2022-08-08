@@ -10,21 +10,24 @@ plugins {
 
     // Navigation SafeArgs
     id(libs.plugins.navigation.safeArgs.get().pluginId)
+
+    // Hilt
+    id(libs.plugins.hilt.android.get().pluginId)
 }
 
 android {
-    compileSdk = 32
+    compileSdk = config.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 23
-        targetSdk = 32
+        minSdk = config.versions.minSdk.get().toInt()
+        targetSdk = config.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        release {
+        getByName(config.versions.releaseBuildType.get()) {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -37,7 +40,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = options.versions.kotlinJvmTargetOptions.get()
     }
     buildFeatures {
         viewBinding = true
@@ -45,7 +48,8 @@ android {
 }
 
 dependencies {
-    api(project(":common"))
+    implementation(project(":core-ui"))
+    implementation(project(":features:feature-main:data"))
 
     // UI Components
     implementation(libs.bundles.uiComponents)
@@ -53,22 +57,15 @@ dependencies {
     // Core
     implementation(libs.android.core)
 
-    // Coroutines
-    implementation(libs.coroutines.android)
-    implementation(libs.coroutines.core)
-
     // Lifecycle
     implementation(libs.bundles.lifecycle)
 
     // Navigation
     implementation(libs.bundles.navigation)
 
-    //Paging 3
-    implementation(libs.paging.paging)
 
-    //Retrofit 2
-    implementation(libs.bundles.retrofit)
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
-    //OkHttp
-    implementation(libs.bundles.okHttp)
 }
