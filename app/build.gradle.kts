@@ -18,12 +18,12 @@ plugins {
 }
 
 android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = config.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.timberta.geekmusic"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        minSdk = config.versions.minSdk.get().toInt()
+        targetSdk = config.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -31,11 +31,15 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName(config.versions.releaseBuildType.get()) {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
+        }
+        getByName(config.versions.debugBuildType.get()) {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
         }
     }
     compileOptions {
@@ -43,7 +47,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = options.versions.kotlinJvmTargetOptions.get()
     }
 
     //ViewBinding
@@ -53,7 +57,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature-main"))
+    implementation(project(":features:feature-main"))
     // UI Components
     implementation(libs.bundles.uiComponents)
 
